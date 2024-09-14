@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   Sidebar,
   Menu,
@@ -6,8 +6,8 @@ import {
   SubMenu,
   SidebarFooter,
 } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme, Badge } from "@mui/material";
-import { Link } from "react-router-dom";
+import {Box, IconButton, Typography, useTheme, Badge} from "@mui/material";
+import {Link} from "react-router-dom";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -17,7 +17,7 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import TableViewIcon from '@mui/icons-material/TableView';
+import TableViewIcon from "@mui/icons-material/TableView";
 const SideBar = () => {
   const [isCollapsed, setisCollapsed] = useState(false);
   const [toggled, setToggled] = useState(false);
@@ -35,15 +35,13 @@ const SideBar = () => {
         toggled={toggled}
         onBackdropClick={() => setToggled(false)}
         onBreakPoint={setBroken}
-        image="/assets/17361.jpg"
+        image="/assets/wallpaper.jpg"
         breakPoint="md"
-        style={{ height: "100%" }}
-
+        style={{height: "100%"}}
+        // backgroundColor="pink"
       >
-        <div
-          style={{ display: "flex", flexDirection: "column", height: "100%" }}
-        >
-          <div style={{ flex: 1, marginBottom: "32px" }}>
+        <div style={{display: "flex", flexDirection: "column", height: "100%"}}>
+          <div style={{flex: 1, marginBottom: "32px"}}>
             <Menu iconShape="square">
               {/* LOGO */}
               <MenuItem
@@ -76,34 +74,28 @@ const SideBar = () => {
                   >
                     <img
                       alt="profile-user"
-                      width="100px"
+                      width="110px"
                       height="100px"
                       src={`/assets/user.jpg`}
-                      style={{ cursor: "pointer", borderRadius: "50%" }}
+                      style={{cursor: "pointer", borderRadius: "50%"}}
                     />
                   </Box>
                   <Box textAlign="center">
-                    <Typography sx={{ m: "10px 0 0 0" }}>ROITAI</Typography>
+                    <Typography sx={{m: "10px 0 0 0"}}>STAMP</Typography>
                     <Typography>DEV </Typography>
                   </Box>
                 </Box>
               )}
 
-              <Link to="/admin" className="menu-bars">
+              <Link to="/admin/index" className="menu-bars">
                 <MenuItem icon={<HomeOutlinedIcon />}>Dashboard</MenuItem>
               </Link>
 
               <SubMenu icon={<MapOutlinedIcon />} label="Data">
                 <Link to={"/admin/viewtable"} className="menu-bars">
-                  <MenuItem icon={<TableViewIcon />}>
-                    {" "}
-                    Table 
-                  </MenuItem>
+                  <MenuItem icon={<TableViewIcon />}> Table</MenuItem>
                 </Link>
-                <MenuItem icon={<BarChartOutlinedIcon />}>
-                  {" "}
-                  Line charts
-                </MenuItem>
+                <MenuItem icon={<BarChartOutlinedIcon />}>Line charts</MenuItem>
               </SubMenu>
 
               <SubMenu label="Manage" icon={<PeopleOutlinedIcon />}>
@@ -141,8 +133,8 @@ const SideBar = () => {
         </div>
       </Sidebar>
       <main>
-        <div style={{ padding: "16px 2px ", color: "#44596e" }}>
-          <div style={{ marginBottom: "16px" }}>
+        <div style={{padding: "16px 2px ", color: "#44596e"}}>
+          <div style={{marginBottom: "16px"}}>
             {broken && (
               <IconButton onClick={() => setToggled(!toggled)}>
                 <MenuOutlinedIcon />

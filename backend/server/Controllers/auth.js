@@ -52,6 +52,7 @@ exports.login = async (req, res) => {
       var payload = {
         user: {
           name: user.name,
+          role: user.role,
         },
       };
 
@@ -65,6 +66,21 @@ exports.login = async (req, res) => {
       // ถ้าหา user ไม่เจอ
       return res.status(400).send("User not Found!!");
     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.currentUser = async (req, res) => {
+  try {
+    console.log("currentUser", req.user);
+    // ค้นหา user ในหลังบ้าน
+    const user = await Users.findOne({name: req.user.name})
+      .select("-password")
+      .exec();
+    // ส่งข้อมูลไปให้หน้าบ้าน
+    res.send(user);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error");

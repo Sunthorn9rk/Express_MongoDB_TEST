@@ -5,6 +5,18 @@ import {Link} from "react-router-dom";
 
 import {remove, create, getdata} from "../functions/product";
 
+// material UI
+import {Button, TextField} from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
 const FormProduct = () => {
   // javascript
   //   const tam = "tam roitai";
@@ -71,66 +83,95 @@ const FormProduct = () => {
       {/* HTML */}
       FormProduct
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input
-          type="text"
-          name="name"
-          onChange={(e) => handleChange(e)}
-          placeholder="name"
-        />
-        <br />
-        <input
-          type="text"
-          name="detail"
-          placeholder="detail"
-          onChange={(e) => handleChange(e)}
-        />
-
-        <br />
-        <input
-          type="text"
-          name="price"
-          placeholder="price"
-          onChange={(e) => handleChange(e)}
-        />
-        <br />
-
-        <input type="file" name="file" onChange={(e) => handleChange(e)} />
-        <br />
-        <button>Submit</button>
+        <div>
+          <TextField
+            id="outlined-basic"
+            label="name"
+            variant="outlined"
+            name="name"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div>
+          <TextField
+            id="outlined-basic"
+            label="detail"
+            variant="outlined"
+            name="detail"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div>
+          <TextField
+            id="outlined-basic"
+            label="price"
+            variant="outlined"
+            name="price"
+            type="number"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div>
+          <TextField
+            id="outlined-basic"
+            label="file"
+            variant="outlined"
+            name="file"
+            type="file"
+            onChange={(e) => handleChange(e)}
+            focused
+          />
+        </div>
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
       </form>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">name</th>
-            <th scope="col">detail</th>
-            <th scope="col">price</th>
-            <th scope="col">Image</th>
-            <th scope="col">action</th>
-            <th scope="col">edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* ลูปเอาitem แต่ละอันมาโชว์ */}
-          {data
-            ? data.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.name}</td>
-                  <td>{item.detail}</td>
-                  <td>{item.price}</td>
-                  <td>{item.file}</td>
-                  <td onClick={() => handleRemove(item._id)}>
-                    <Link>delete</Link>
-                  </td>
-                  <td>
-                    <Link to={"/edit/" + item._id}>edit</Link>
-                  </td>
-                </tr>
-              ))
-            : null}
-        </tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table sx={{minWidth: 650}} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell scope="col">#</TableCell>
+              <TableCell scope="col">name</TableCell>
+              <TableCell scope="col">detail</TableCell>
+              <TableCell scope="col">price</TableCell>
+              <TableCell scope="col">Image</TableCell>
+              <TableCell scope="col">action</TableCell>
+              <TableCell scope="col">edit</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* ลูปเอาitem แต่ละอันมาโชว์ */}
+            {data
+              ? data.map((item, index) => (
+                  <TableRow
+                    key={index}
+                    sx={{"&:last-child td, &:last-child th": {border: 0}}}
+                  >
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.detail}</TableCell>
+                    <TableCell>{item.price}</TableCell>
+                    <TableCell>{item.file}</TableCell>
+                    <TableCell>
+                      <DeleteIcon
+                        color="error"
+                        cursor="pointer"
+                        onClick={() => handleRemove(item._id)}
+                      >
+                        delete
+                      </DeleteIcon>
+                    </TableCell>
+                    <TableCell>
+                      <Link to={"/edit/" + item._id}>
+                        <EditIcon />
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))
+              : null}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

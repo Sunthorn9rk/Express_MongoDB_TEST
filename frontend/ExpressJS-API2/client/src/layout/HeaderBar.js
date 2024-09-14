@@ -1,14 +1,26 @@
-import react, { useState } from "react";
-import { Box, IconButton, Menu, MenuItem } from "@mui/material";
+import react, {useState} from "react";
+import {Box, IconButton, Menu, MenuItem} from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {logout} from "../store/userSlice";
 
 const HeaderBar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    handleClose();
+    navigate("/");
+  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,8 +33,8 @@ const HeaderBar = () => {
     <Box display="flex" justifyContent="space-between" p={2}>
       {/* search  */}
       <Box display="flex" borderRadius="3px" backgroundColor="#F5EFE7">
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
-        <IconButton type="button" sx={{ p: 1 }}>
+        <InputBase sx={{ml: 2, flex: 1}} placeholder="Search" />
+        <IconButton type="button" sx={{p: 1}}>
           <SearchIcon />
         </IconButton>
       </Box>
@@ -55,9 +67,7 @@ const HeaderBar = () => {
             <Link to="#" className="menu-bars">
               <MenuItem onClick={handleClose}>Profile</MenuItem>
             </Link>
-            <Link to="#" className="menu-bars">
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-            </Link>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </IconButton>
       </Box>
