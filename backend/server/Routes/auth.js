@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const {register, login, currentUser} = require("../Controllers/auth");
+const {
+  register,
+  login,
+  currentUser,
+  loginLine,
+} = require("../Controllers/auth");
 
 const {auth, adminCheck} = require("../Middleware/auth");
 
@@ -9,6 +14,8 @@ const {auth, adminCheck} = require("../Middleware/auth");
 router.post("/register", register);
 
 router.post("/login", login);
+
+router.post("/login-line", loginLine);
 
 // check role user
 // ใส่ middleware auth ในการนำtoken มาเช็คก่อนผ่านเข้าไป

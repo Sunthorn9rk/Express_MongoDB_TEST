@@ -10,6 +10,8 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "user",
     },
+    picture: String,
+    displayName: String,
   },
   {timestamps: true}
 );

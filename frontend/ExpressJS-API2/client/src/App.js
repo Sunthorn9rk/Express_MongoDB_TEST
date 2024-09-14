@@ -15,6 +15,7 @@ import TestRedux2 from "./components/TestRedux2";
 // pages
 import Register from "./components/pages/auth/Register";
 import Login from "./components/pages/auth/Login";
+import Line from "./components/pages/auth/Line";
 
 // Admin
 import HomePageAdmin from "./components/pages/admin/HomePageAdmin";
@@ -80,6 +81,7 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/line" element={<Line />} />
 
           {/* User */}
           <Route

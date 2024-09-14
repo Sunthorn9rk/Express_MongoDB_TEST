@@ -1,4 +1,4 @@
-import * as React from "react";
+import react, {useEffect} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,6 +25,9 @@ import {useDispatch} from "react-redux";
 // ส่งไปยัง store user
 import {login as loginRedux} from "../../../store/userSlice";
 
+// line frontend-framework
+import liff from "@line/liff";
+
 function Copyright(props) {
   return (
     <Typography
@@ -49,6 +52,18 @@ const defaultTheme = createTheme();
 export default function Login() {
   const navi = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    liff.init({liffId: "2006326354-Vkx2x4ad"});
+  }, []);
+
+  const handleLoginLiff = () => {
+    try {
+      liff.login();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -121,7 +136,7 @@ export default function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Login
             </Typography>
             <Box
               component="form"
@@ -152,14 +167,26 @@ export default function Login() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{mt: 3, mb: 2}}
               >
-                Sign In
+                Login
               </Button>
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="success"
+                onClick={handleLoginLiff}
+              >
+                Login With LINE
+              </Button>
+
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">

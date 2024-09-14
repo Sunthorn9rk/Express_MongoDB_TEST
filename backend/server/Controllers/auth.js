@@ -72,6 +72,45 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.loginLine = async (req, res) => {
+  try {
+    // code
+    const {userId, displayName, pictureUrl} = req.body;
+
+    var data = {
+      name: userId,
+      picture: pictureUrl,
+      displayName: displayName,
+    };
+
+    // 1 Check USER
+    var user = await Users.findOneAndUpdate({name: userId}, {new: true});
+
+    if (user) {
+      console.log("User Updated!!!");
+    } else {
+      user = new Users(data);
+      await user.save();
+    }
+
+    // 2.make Payload
+    var payload = {
+      user,
+    };
+    // console.log(payload);
+
+    // 3.Generate Token
+    //   สร้าง token ใส่ไปกับ payload โดยกำหนดให้หมดอายุภายใน 1 วัน
+    jwt.sign(payload, "jwtsecret", {expiresIn: "1d"}, (err, token) => {
+      if (err) throw err;
+      res.json({token, payload});
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+  }
+};
+
 exports.currentUser = async (req, res) => {
   try {
     console.log("currentUser", req.user);
