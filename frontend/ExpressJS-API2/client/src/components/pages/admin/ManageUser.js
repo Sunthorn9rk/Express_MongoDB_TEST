@@ -61,6 +61,7 @@ const ManageUser = () => {
               <TableCell scope="col">#</TableCell>
               <TableCell scope="col">name</TableCell>
               <TableCell scope="col">role</TableCell>
+              <TableCell scope="col">ip</TableCell>
               <TableCell scope="col">updatedAt</TableCell>
             </TableRow>
           </TableHead>
@@ -87,6 +88,7 @@ const ManageUser = () => {
                         ))}
                       </Select>
                     </TableCell>
+                    <TableCell>{item.ip}</TableCell>
                     <TableCell>{item.updatedAt}</TableCell>
                   </TableRow>
                 ))

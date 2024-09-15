@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
 
-const {notifyLine} = require("../Functions/Notify");
+const {notifyLine, getIPClient} = require("../Functions/Notify");
 
 const tokenLine = "uqxSv8OtEMIN4nOkTUIGNCPWEhXYMNcqD1cC4RltSN2";
 
@@ -40,11 +40,14 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    const ip = await getIPClient(req);
+    // console.log(ip);
+
     // 1.check User and Password
     const {name, password} = req.body;
 
     // ค้นหาใน database โดยค้นหา name และทำการ update({new: true}) ข้อมูลกลับไป เพื่อจะได้ updateเวลา เช่นเพื่ออยากจะดึง เวลาที่ login ล่าสุดตอนไหน
-    var user = await Users.findOneAndUpdate({name}, {new: true});
+    var user = await Users.findOneAndUpdate({name}, {ip: ip}, {new: true});
     if (user) {
       const isMatch = await bcrypt.compare(password, user.password);
 
@@ -61,7 +64,8 @@ exports.login = async (req, res) => {
       };
 
       // notifyLINE
-      const text = "User: " + user.name + " ได้ทำการ Login";
+      const text =
+        "User: " + user.name + " ได้ทำการ Login" + "มาจาก IPAdress:" + ip;
 
       await notifyLine(tokenLine, text);
 
@@ -72,6 +76,11 @@ exports.login = async (req, res) => {
         res.json({token, payload});
       });
     } else {
+      // notifyLINE
+      const text = "User: " + name + " พยายาม Login" + "มาจาก IPAdress:" + ip;
+
+      await notifyLine(tokenLine, text);
+
       // ถ้าหา user ไม่เจอ
       return res.status(400).send("User not Found!!");
     }
