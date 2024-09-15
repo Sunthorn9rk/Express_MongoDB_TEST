@@ -4,6 +4,10 @@ const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
 
+const {notifyLine} = require("../Functions/Notify");
+
+const tokenLine = "uqxSv8OtEMIN4nOkTUIGNCPWEhXYMNcqD1cC4RltSN2";
+
 exports.register = async (req, res) => {
   try {
     // 1.Check user is already have in database?
@@ -55,6 +59,11 @@ exports.login = async (req, res) => {
           role: user.role,
         },
       };
+
+      // notifyLINE
+      const text = "User: " + user.name + " ได้ทำการ Login";
+
+      await notifyLine(tokenLine, text);
 
       // 3.Generate Token
       //   สร้าง token ใส่ไปกับ payload โดยกำหนดให้หมดอายุภายใน 1 วัน
